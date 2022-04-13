@@ -1,0 +1,19 @@
+POST http://localhost:6969/post HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":"3",
+    "name":"Rishabh",
+    "fk_company":"3"
+}
+
+###
+
+POST http://localhost:6969/post HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":"3",
+    "name":"Rishabh",
+    "fk_company":"3"
+}
