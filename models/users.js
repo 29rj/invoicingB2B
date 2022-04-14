@@ -43,16 +43,24 @@ const patchUsers = (req, res) => {
 
   const {user_id,name,fk_company} = req.body;
 
-  pool.query(
-    'UPDATE users SET user_id = $1, name = $2 , fk_company = $3 WHERE user_id = $1',
-    [user_id,name,fk_company],
-    (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.status(200).send(`User modified with ID: ${user_id}`)
+  pool.query('SELECT * FROM companies WHERE id = $1',[fk_company],(err,result)=>{
+    console.log(result+" my");
+    if(result.rowCount == 0){
+      res.status(201).send(`Company does not exist`);
     }
-  )
+    else{
+      pool.query(
+        'UPDATE users SET user_id = $1, name = $2 , fk_company = $3 WHERE user_id = $1',
+        [user_id,name,fk_company],
+        (error, results) => {
+          if (error) {
+            throw error
+          }
+          res.status(200).send(`User modified with ID: ${user_id}`)
+        }
+      )
+    }
+  })
 }
 
 module.exports = {

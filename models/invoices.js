@@ -21,8 +21,6 @@ const postInvoices = (req, res) => {
 
   const { user_id, from_id, to_id, amount } = req.body;
 
-  // console.log(req.body+" second one");
-
   const items = [amount];
 
   pool.query('SELECT * from users WHERE user_id = $1', [user_id], (err, results) => {
@@ -139,7 +137,6 @@ const patchInvoices = (req, res) => {
     }
   })
 }
-
 module.exports = {
   getInvoices,
   postInvoices,

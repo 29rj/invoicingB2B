@@ -19,8 +19,8 @@ content-type: application/json
 
 {
     "user_id":"3",
-    "name":"Raju",
-    "fk_company":"1"
+    "name":"Ramu Singh",
+    "fk_company":"4"
 }
 
 ###
