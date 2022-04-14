@@ -53,5 +53,5 @@ Explanation of End-Points:
  
   a) Download the repository <br>
   b) Then open terminal and run `npm install` and go to the index.js directory.<br>
-  c) Now run `node index.js` in terminal, it start our sever on the port 7777.<br>
-  d) TO check working of each URL, go to the "test.http" file where already some filled data is there and use it to the check working of all the end- points.
+  c) Now run `node index.js` in terminal, it starts our sever on the port 7777.<br>
+  d) TO check working of each end-points, go to the "test.http" file where already some filled data is there and use it to the check working of all the end- points.
