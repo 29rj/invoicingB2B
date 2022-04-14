@@ -1,19 +1,81 @@
-POST http://localhost:6969/post HTTP/1.1
+GET http://localhost:7777/users/get HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:7777/users/post HTTP/1.1
 content-type: application/json
 
 {
-    "user_id":"3",
+    "user_id":"10",
     "name":"Rishabh",
-    "fk_company":"3"
+    "fk_company":"2"
 }
 
 ###
 
-POST http://localhost:6969/post HTTP/1.1
+POST http://localhost:7777/users/patch HTTP/1.1
 content-type: application/json
 
 {
     "user_id":"3",
-    "name":"Rishabh",
-    "fk_company":"3"
+    "name":"Raju",
+    "fk_company":"1"
 }
+
+###
+
+GET http://localhost:7777/companies/get HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:7777/companies/post HTTP/1.1
+content-type: application/json
+
+{
+    "id":"7",
+    "name":"HEROKU",
+    "email":"hero@gmail.com"
+}
+
+###
+
+POST http://localhost:7777/companies/patch HTTP/1.1
+content-type: application/json
+
+{
+    "id":"3",
+    "name":"HeroHonda",
+    "email":"honda@gmail.com"
+}
+
+###
+
+GET http://localhost:7777/invoices/get HTTP/1.1
+content-type: application/json
+
+###
+
+POST http://localhost:7777/invoices/post HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":"7",
+    "from_id":"HEROKU",
+    "to_id":"hero@gmail.com",
+    "amount":"500"
+}
+
+###
+
+POST http://localhost:7777/invoices/patch HTTP/1.1
+content-type: application/json
+
+{
+    "user_id":"7",
+    "from_id":"HEROKU",
+    "to_id":"hero@gmail.com",
+    "amount":"500"
+}
+

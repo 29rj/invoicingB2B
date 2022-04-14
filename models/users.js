@@ -20,13 +20,22 @@ const getUsers = (req,res) => {
 const postUsers = (req,res) => {
 
   const {user_id,name,fk_company} = req.body;
-  console.log(req.body +" this one");
 
-  pool.query('INSERT INTO users (user_id,name,fk_company) VALUES ($1, $2 ,$3)', [user_id,name,fk_company], (error, results) => {
-    if (error) {
-      throw error
+  // console.log(req.body +" this one");
+
+  pool.query('SELECT * FROM companies WHERE id = $1',[fk_company],(err,result)=>{
+    console.log(result+" my");
+    if(result.rowCount == 0){
+      res.status(201).send(`Company does not exist`);
     }
-    res.status(201).send(`User added with ID: ${user_id}`)
+    else{
+      pool.query('INSERT INTO users (user_id,name,fk_company) VALUES ($1, $2 ,$3)', [user_id,name,fk_company], (error, results) => {
+        if (error) {
+          throw error
+        }
+        res.status(201).send(`User added with ID: ${user_id}`)
+      })
+    }
   })
 }
 

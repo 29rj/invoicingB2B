@@ -21,7 +21,7 @@ const postCompanies = (req,res) => {
 
   const {id,name,email} = req.body;
 
-  console.log(req.body +" this one");
+  // console.log(req.body +" this one");
 
   pool.query('INSERT INTO companies (id,name,email) VALUES ($1, $2 ,$3)', [id,name,email], (error, results) => {
     if (error) {
