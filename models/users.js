@@ -63,8 +63,21 @@ const patchUsers = (req, res) => {
   })
 }
 
+const getUser = (req,res)=>{
+  const id = req.params.id;
+  pool.query('SELECT * FROM users WHERE user_id = $1',[id],(err,result)=>{
+    if(result.rowCount == 0){
+      res.status(200).send(`User Does Not Exist With ID : ${id}`);
+    }
+    else{
+      res.status(200).json(result.rows);
+    }
+  })
+}
+
 module.exports = {
     getUsers,
     postUsers,
-    patchUsers
+    patchUsers,
+    getUser
 }

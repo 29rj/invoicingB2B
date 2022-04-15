@@ -137,8 +137,22 @@ const patchInvoices = (req, res) => {
     }
   })
 }
+
+const getInvoice = (req,res)=>{
+  const id = req.params.id;
+  pool.query('SELECT * FROM invoices WHERE invoice_id = $1',[id],(err,result)=>{
+    if(result.rowCount == 0){
+      res.status(200).send(`Invoice Does Not Exist With ID : ${id}`);
+    }
+    else{
+      res.status(200).json(result.rows);
+    }
+  })
+}
+
 module.exports = {
   getInvoices,
   postInvoices,
-  patchInvoices
+  patchInvoices,
+  getInvoice
 }

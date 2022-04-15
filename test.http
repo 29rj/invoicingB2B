@@ -3,6 +3,11 @@ content-type: application/json
 
 ###
 
+GET http://localhost:7777/users/get1 HTTP/1.1
+content-type: application/json
+
+###
+
 POST http://localhost:7777/users/post HTTP/1.1
 content-type: application/json
 

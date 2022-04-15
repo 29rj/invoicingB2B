@@ -47,8 +47,21 @@ const patchCompanies = (req, res) => {
   )
 }
 
+const getCompany= (req,res)=>{
+  const id = req.params.id;
+  pool.query('SELECT * FROM companies WHERE id = $1',[id],(err,result)=>{
+    if(result.rowCount == 0){
+      res.status(200).send(`Company Does Not Exist With ID : ${id}`);
+    }
+    else{
+      res.status(200).json(result.rows);
+    }
+  })
+}
+
 module.exports = {
     getCompanies,
     postCompanies,
-    patchCompanies
+    patchCompanies,
+    getCompany
 }
