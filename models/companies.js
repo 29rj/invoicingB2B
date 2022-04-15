@@ -11,7 +11,7 @@ const pool = new Pool({
 const getCompanies = (req,res) => {
     pool.query('SELECT * FROM companies', (error, results) => {
         if (error) {
-          throw error
+          res.status(201).send(`Error: : ${error}`);
         }
         res.status(200).json(results.rows);
     })
@@ -25,7 +25,7 @@ const postCompanies = (req,res) => {
 
   pool.query('INSERT INTO companies (id,name,email) VALUES ($1, $2 ,$3)', [id,name,email], (error, results) => {
     if (error) {
-      throw error
+      res.status(201).send(`Error: : ${error}`);
     }
     res.status(201).send(`User added with ID: ${id}`)
   })
@@ -40,7 +40,7 @@ const patchCompanies = (req, res) => {
     [id,name,email],
     (error, results) => {
       if (error) {
-        throw error
+        res.status(201).send(`Error: : ${error}`);
       }
       res.status(200).send(`User modified with ID: ${id}`)
     }
