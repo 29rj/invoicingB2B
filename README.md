@@ -49,9 +49,9 @@ Explanation of End-Points:
  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&emsp;&emsp;&emsp;&emsp;b) If that invoice is created by another user then simply insert that transaction according to that user_id.<br>
                     
                     
- ## Steps To Run In The Local Server :
+ ## How to check the result :
  
- ### Method 1:<br>
+ ### Method 1: In the local server<br>
   a) Download the repository <br>
   b) Then open terminal and run `npm install` and go to the index.js directory.<br>
   c) Now run `node index.js` in terminal, it starts our sever on the port 7777.<br>
