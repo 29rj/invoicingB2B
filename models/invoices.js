@@ -11,9 +11,9 @@ const pool = new Pool({
 const getInvoices = (req, res) => {
   pool.query('SELECT * FROM invoices', (err, results) => {
     if (err) {
-      res.status(201).send(`err: : ${err}`);
+      return res.status(201).send(`err: : ${err}`);
     }
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   })
 }
 
@@ -26,17 +26,17 @@ const postInvoices = (req, res) => {
   pool.query('SELECT * from users WHERE user_id = $1', [user_id], (err, results) => {
     if (err) {
       console.log("err: ", err);
-      res.status(201).send(`err: : ${err}`);
+      return res.status(201).send(`err: : ${err}`);
     }
 
     if (results.rowCount == 0) {
       console.log("User Does Not Exists!!");
-      res.status(201).send(`User Does Not Exists!!`)
+      return res.status(201).send(`User Does Not Exists!!`)
     }
     else {
       pool.query('SELECT * FROM invoices WHERE from_id = $1 and to_id = $2', [from_id, to_id], (err, results) => {
         if (err) {
-          res.status(201).send(`err: : ${err}`);
+          return res.status(201).send(`err: : ${err}`);
         }
         if (results.rowCount == 0) {
           
@@ -44,21 +44,21 @@ const postInvoices = (req, res) => {
             // console.log("ID Company-> ",company_id.rows[0].fk_company);
     
             if(company_id.rows[0].fk_company != from_id && company_id.rows[0].fk_company != to_id){
-              res.status(201).send(`User Does Not Belong the Company!!!`);
+              return res.status(201).send(`User Does Not Belong the Company!!!`);
             }
             else{
               pool.query('INSERT INTO invoices (user_id,from_id,to_id,amount,items) VALUES ($1, $2 ,$3, $4, $5)', [user_id, from_id, to_id, amount, items], (err, result) => {
                 if (err) {
                   console.log("err: ", err);
                 }
-                res.status(201).send(`Transaction from : ${from_id} to ${to_id} added !!!`)
+                return res.status(201).send(`Transaction from : ${from_id} to ${to_id} added !!!`)
               })
             }
           })
         }
         else {
           console.log("Invoice Already Exist !!!");
-          res.status(201).send(`Transaction Already Existed !!!`)
+          return res.status(201).send(`Transaction Already Existed !!!`)
         }
       })
     }
@@ -72,7 +72,7 @@ const patchInvoices = (req, res) => {
   pool.query('SELECT * from users WHERE user_id = $1', [user_id], (err, user) => {
     if (err) {
       console.log("err: ", err);
-      res.status(201).send(`err: : ${err}`);
+      return res.status(201).send(`err: : ${err}`);
     }
 
     // console.log("User->",user.rows[0].user_id);
@@ -88,7 +88,7 @@ const patchInvoices = (req, res) => {
         // console.log("ID Company-> ",company_id.rows[0].fk_company);
 
         if(company_id.rows[0].fk_company != from_id && company_id.rows[0].fk_company != to_id){
-          res.status(201).send(`User Does Not Belong the Company!!!`);
+          return res.status(201).send(`User Does Not Belong the Company!!!`);
         }
         else{
           pool.query('SELECT * from invoices WHERE from_id = $1 and to_id = $2',[from_id,to_id],(err,result)=>{
@@ -96,12 +96,12 @@ const patchInvoices = (req, res) => {
 
             if(err){
               console.log("err: ",err);
-              throw err
+              res.status(201).send(`err: : ${err}`);
             }
 
             if(result.rowCount == 0){
               console.log("No Such Transaction Exist...You need To create one!!!");
-              res.status(201).send(`No Such Transaction Exist...You need To create one!!!`);
+              return res.status(201).send(`No Such Transaction Exist...You need To create one!!!`);
             }
             else{
               let currAmount = parseInt(result.rows[0].amount);
@@ -118,7 +118,7 @@ const patchInvoices = (req, res) => {
 
               pool.query('UPDATE invoices SET amount = $1, items = $2 WHERE from_id = $3 and to_id =$4 and user_id = $5',[currAmount, currItems, from_id, to_id,user_id],(err, updated) => {
                 if (err) {
-                  res.status(201).send(`err: : ${err}`);
+                  return res.status(201).send(`err: : ${err}`);
                 }
                 if(updated.rowCount == 0){
 
@@ -131,10 +131,10 @@ const patchInvoices = (req, res) => {
                     // res.status(201).send(`Transaction from : ${from_id} to ${to_id} added !!!`)
                   })
 
-                  res.status(200).send(`Invoice insertion successful!!`)
+                  return res.status(200).send(`Invoice insertion successful!!`)
                 }
                 else{
-                  res.status(200).send(`Invoice Updated successfully!!`)
+                  return res.status(200).send(`Invoice Updated successfully!!`)
                 }
               })
               console.log("Transaction exist");
@@ -152,10 +152,10 @@ const getInvoice = (req,res)=>{
   const id = req.params.id;
   pool.query('SELECT * FROM invoices WHERE invoice_id = $1',[id],(err,result)=>{
     if(result.rowCount == 0){
-      res.status(200).send(`Invoice Does Not Exist With ID : ${id}`);
+      return res.status(200).send(`Invoice Does Not Exist With ID : ${id}`);
     }
     else{
-      res.status(200).json(result.rows);
+      return res.status(200).json(result.rows);
     }
   })
 }

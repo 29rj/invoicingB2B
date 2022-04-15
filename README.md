@@ -51,7 +51,13 @@ Explanation of End-Points:
                     
  ## Steps To Run In The Local Server :
  
+ ### Method 1:<br>
   a) Download the repository <br>
   b) Then open terminal and run `npm install` and go to the index.js directory.<br>
   c) Now run `node index.js` in terminal, it starts our sever on the port 7777.<br>
-  d) To check working of each end-points, go to the "test.http" file where already some filled data is there and use it to the check working of all the end- points.
+  d) To check working of each end-points, go to the "test.http" file where already some filled data is there and use it to the check working of all the end- points.<br>
+
+### Method 2 :<br>
+Use this postman link to see generated output:<br>
+  `https://documenter.getpostman.com/view/20506289/Uyr4M1bJ`
+

@@ -9,11 +9,11 @@ const pool = new Pool({
 });
 
 const getCompanies = (req,res) => {
-    pool.query('SELECT * FROM companies', (error, results) => {
-        if (error) {
-          res.status(201).send(`Error: : ${error}`);
+    pool.query('SELECT * FROM companies', (err, results) => {
+        if (err) {
+          return res.status(201).send(`err: : ${err}`);
         }
-        res.status(200).json(results.rows);
+        return res.status(200).json(results.rows);
     })
 }
 
@@ -23,11 +23,11 @@ const postCompanies = (req,res) => {
 
   // console.log(req.body +" this one");
 
-  pool.query('INSERT INTO companies (id,name,email) VALUES ($1, $2 ,$3)', [id,name,email], (error, results) => {
-    if (error) {
-      res.status(201).send(`Error: : ${error}`);
+  pool.query('INSERT INTO companies (id,name,email) VALUES ($1, $2 ,$3)', [id,name,email], (err, results) => {
+    if (err) {
+      return res.status(201).send(`err: : ${err}`);
     }
-    res.status(201).send(`User added with ID: ${id}`)
+    return res.status(201).send(`User added with ID: ${id}`)
   })
 }
 
@@ -38,11 +38,16 @@ const patchCompanies = (req, res) => {
   pool.query(
     'UPDATE companies SET id = $1, name = $2 , email = $3 WHERE id = $1',
     [id,name,email],
-    (error, results) => {
-      if (error) {
-        res.status(201).send(`Error: : ${error}`);
+    (err, results) => {
+      if (err) {
+        return res.status(201).send(`err: : ${err}`);
       }
-      res.status(200).send(`User modified with ID: ${id}`)
+
+      console.log(results.rowCount);
+      if(results.rowCount == 0){
+        return res.status(200).send(`Company Does Not Exist With ID: ${id}`);
+      }
+      return res.status(201).send(`Company modified with ID: ${id}`)
     }
   )
 }
@@ -51,10 +56,10 @@ const getCompany= (req,res)=>{
   const id = req.params.id;
   pool.query('SELECT * FROM companies WHERE id = $1',[id],(err,result)=>{
     if(result.rowCount == 0){
-      res.status(200).send(`Company Does Not Exist With ID : ${id}`);
+      return res.status(200).send(`Company Does Not Exist With ID : ${id}`);
     }
     else{
-      res.status(200).json(result.rows);
+      return res.status(200).json(result.rows);
     }
   })
 }
